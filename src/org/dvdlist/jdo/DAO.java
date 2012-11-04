@@ -27,7 +27,7 @@ public class DAO {
 				PersistenceManager pm=null;
 				try{
 					pm= PMF.get().getPersistenceManager();
-					pm.getObjectIdClass(AppStore.class);
+					//pm.getObjectIdClass(AppStore.class);
 					app=getApp(pm);
 					if(app!=null)
 					{
@@ -62,7 +62,7 @@ public class DAO {
 			if(login!=null&&login.length()>0&&password!=null&&password.length()>0)
 			{
 				pm= PMF.get().getPersistenceManager();
-				pm.getObjectIdClass(AppStore.class);
+				//pm.getObjectIdClass(AppStore.class);
 				app=getApp(pm);
 				if(app==null)
 				{
@@ -77,6 +77,74 @@ public class DAO {
 					user.setAdmin(Boolean.FALSE);
 				app.getUsers().clear();
 				app.getUsers().add(user);
+				pm.makePersistent(app);
+			}
+		}finally{
+			pm.close();
+		}
+	}
+
+	public void add_user(String login,String password,boolean admin){
+		UserDb user;
+		AppStore app;
+		PersistenceManager pm=null;
+		try{
+			log.warning("add user "+login);
+			if(login!=null&&login.length()>0&&password!=null&&password.length()>0)
+			{
+				pm= PMF.get().getPersistenceManager();
+				app=getApp(pm);
+				if(app==null)
+				{
+					app=new AppStore();
+				}
+				user=new UserDb();
+				user.setLogin(login);
+				user.setPassword(password);
+				if(admin)
+					user.setAdmin(Boolean.TRUE);
+				else
+					user.setAdmin(Boolean.FALSE);
+				app.getUsers().add(user);
+				pm.makePersistent(app);
+			}
+		}finally{
+			pm.close();
+		}
+	}
+
+	public void suppr_user(String login){
+		UserDb user;
+		AppStore app;
+		PersistenceManager pm=null;
+		try{
+			log.warning("Suppr user "+login);
+			if(login!=null&&login.length()>0)
+			{
+				pm= PMF.get().getPersistenceManager();
+				app=getApp(pm);
+				if(app==null)
+				{
+					app=new AppStore();
+				}
+				/*user=new UserDb();
+				user.setLogin(login);
+				user.setPassword(password);
+				if(admin)
+					user.setAdmin(Boolean.TRUE);
+				else
+					user.setAdmin(Boolean.FALSE);
+				//app.getUsers().clear();
+				app.getUsers().add(user);*/
+				for(int i=0;i<app.getUsers().size();i++)
+				{
+					user=app.getUsers().get(i);
+					if(user!=null&&user.getLogin()!=null&&user.getLogin().equals(login))
+					{
+						app.getUsers().remove(i);
+						i--;
+					}
+				}
 				pm.makePersistent(app);
 			}
 		}finally{

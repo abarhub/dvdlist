@@ -20,24 +20,32 @@ if(action!=null&&action.equals("enregistrer"))
 {
 	dao.init(login,password,admin!=null&&admin.equals("on"));
 }
+else if(action!=null&&action.equals("ajouter"))
+{
+	dao.add_user(login,password,admin!=null&&admin.equals("on"));
+}
+else if(action!=null&&action.equals("suppr"))
+{
+	dao.suppr_user(login);
+}
 liste_users=dao.donne_users();
 %>
 Liste des utilisateurs:
 <table border="1">
-<thead><td>Login</td><td>Admin</td></thead>
+<thead><td>Login</td><td>Admin</td><td></td></thead>
 <%
 if(liste_users!=null)
 {
 	for(UserSession u:liste_users)
 	{
-		out.println("<tr><td>"+u.getLogin()+"</td><td>"+((u.isAdmin())?"oui":"non")+"</td></tr>");
+		out.println("<tr><td>"+u.getLogin()+"</td><td>"+((u.isAdmin())?"oui":"non")+"</td><td><a href=\"?action=suppr&login="+u.getLogin()+"\">Suppr</a></td></tr>");
 	}
 }
 %>
 </table>
 Nouvel utilisateur :<br/>
 <form method="post" Action="?" autocomplete="off">
-<input type="hidden" name="action" value="enregistrer" />
+<input type="hidden" name="action" value="ajouter" />
 <label for="login">Login :</label><br />
 <input type="text" name="login" id="login" /><br />
 <label for="password">Password :</label><br />
