@@ -8,6 +8,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import org.dvdlist.web.ImportFichier;
+import org.dvdlist.web.UserSession;
 
 public class DAO {
 
@@ -17,7 +18,7 @@ public class DAO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public boolean user_valide(String login, String password) {
+	public UserSession user_valide(String login, String password) {
 		if(login!=null&&password!=null)
 		{
 			{
@@ -37,7 +38,9 @@ public class DAO {
 							{
 								if(u.egal(login,password))
 								{
-									return true;
+									UserSession user2;
+									user2=new UserSession(u.isAdmin());
+									return user2;
 								}
 							}
 						}
@@ -47,10 +50,10 @@ public class DAO {
 				}
 			}
 		}
-		return false;
+		return null;
 	}
 	
-	public void init(String login,String password){
+	public void init(String login,String password,boolean admin){
 		UserDb user;
 		AppStore app;
 		PersistenceManager pm=null;
@@ -68,6 +71,10 @@ public class DAO {
 				user=new UserDb();
 				user.setLogin(login);
 				user.setPassword(password);
+				if(admin)
+					user.setAdmin(Boolean.TRUE);
+				else
+					user.setAdmin(Boolean.FALSE);
 				app.getUsers().clear();
 				app.getUsers().add(user);
 				pm.makePersistent(app);

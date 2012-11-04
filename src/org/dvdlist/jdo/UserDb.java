@@ -21,7 +21,18 @@ public class UserDb {
 	
 	@Persistent
 	private String password;
+
+	@Persistent
+	private Boolean admin;
 	
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+	}
+
 	public UserDb() {
 		// TODO Auto-generated constructor stub
 	}
@@ -49,6 +60,10 @@ public class UserDb {
 				return true;
 		}
 		return false;
+	}
+
+	public boolean isAdmin() {
+		return admin!=null&&admin.booleanValue();
 	}
 	
 	

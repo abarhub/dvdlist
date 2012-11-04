@@ -15,14 +15,15 @@ public class Login extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		String login,password;
+		UserSession user,tmp;
 		login=req.getParameter("login");
 		password=req.getParameter("password");
-		if(est_valide(login,password))
+		tmp=est_valide(login,password);
+		if(tmp!=null)
 		{
 			HttpSession session;
-			UserSession user;
 			session=req.getSession(true);
-			user=new UserSession(true);
+			user=new UserSession(tmp.isAdmin());
 			session.setAttribute(USER, user);
 			//resp.setContentType("text/plain");
 			//resp.getWriter().println("Hello, world");
@@ -50,17 +51,19 @@ public class Login extends HttpServlet {
 
 	}
 	
-	private boolean est_valide(String login, String password) {
+	private UserSession est_valide(String login, String password) {
 		if(login!=null&&password!=null)
 		{
 			DAO dao;
+			UserSession user;
 			dao=new DAO();
-			if(dao.user_valide(login,password))
+			user=dao.user_valide(login,password);
+			if(user!=null)
 			{
-				return true;
+				return user;
 			}
 		}
-		return false;
+		return null;
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
