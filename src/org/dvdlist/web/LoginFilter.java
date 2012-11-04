@@ -39,7 +39,18 @@ public class LoginFilter implements Filter {
 	    boolean isAuth(HttpServletRequest req){
 	    	if(req!=null&&req.getSession(false)!=null)
 	    	{
-	    		return true;
+	    		HttpSession session;
+	    		UserSession user;
+	    		session=req.getSession(false);
+	    		if(session!=null)
+	    		{
+	    			Object o;
+	    			o=session.getAttribute(Login.USER);
+	    			if(o!=null&&o instanceof UserSession)
+	    			{
+	    				return true;
+	    			}
+	    		}
 	    	}
 	    	return false;
 	    }

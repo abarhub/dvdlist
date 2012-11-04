@@ -39,6 +39,6 @@ public class AppStore {
 	}
 
 	public AppStore() {
-		// TODO Auto-generated constructor stub
+		
 	}
 }

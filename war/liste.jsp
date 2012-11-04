@@ -27,6 +27,7 @@ if(liste_dvd!=null&&!liste_dvd.isEmpty())
 %>
 
 <a href="/upload.jsp">Upload</a><br/>
+<a href="/init.jsp">Admin</a><br/>
 <a href="/deconnect">Deconnection</a><br/>
 </body>
 </html>

@@ -9,6 +9,9 @@ import org.dvdlist.jdo.DAO;
 
 @SuppressWarnings("serial")
 public class Login extends HttpServlet {
+	
+	public static final String USER = "user";
+
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		String login,password;
@@ -17,7 +20,10 @@ public class Login extends HttpServlet {
 		if(est_valide(login,password))
 		{
 			HttpSession session;
+			UserSession user;
 			session=req.getSession(true);
+			user=new UserSession(true);
+			session.setAttribute(USER, user);
 			//resp.setContentType("text/plain");
 			//resp.getWriter().println("Hello, world");
 			try {

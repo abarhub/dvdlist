@@ -50,25 +50,28 @@ public class DAO {
 		return false;
 	}
 	
-	public void init(){
+	public void init(String login,String password){
 		UserDb user;
 		AppStore app;
 		PersistenceManager pm=null;
 		try{
 			log.warning("Init");
-			pm= PMF.get().getPersistenceManager();
-			pm.getObjectIdClass(AppStore.class);
-			app=getApp(pm);
-			if(app==null)
+			if(login!=null&&login.length()>0&&password!=null&&password.length()>0)
 			{
-				app=new AppStore();
+				pm= PMF.get().getPersistenceManager();
+				pm.getObjectIdClass(AppStore.class);
+				app=getApp(pm);
+				if(app==null)
+				{
+					app=new AppStore();
+				}
+				user=new UserDb();
+				user.setLogin(login);
+				user.setPassword(password);
+				app.getUsers().clear();
+				app.getUsers().add(user);
+				pm.makePersistent(app);
 			}
-			user=new UserDb();
-			user.setLogin("XXXXXXXXXX");
-			user.setPassword("XXXXXXXXXX");
-			app.getUsers().clear();
-			app.getUsers().add(user);
-			pm.makePersistent(app);
 		}finally{
 			pm.close();
 		}
