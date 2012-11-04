@@ -37,7 +37,7 @@ public class LoginFilter implements Filter {
 	     * @return true when authentication is deemed valid
 	     */
 	    boolean isAuth(HttpServletRequest req){
-	    	if(req!=null&&req.getSession(false)!=null)
+	    	/*if(req!=null&&req.getSession(false)!=null)
 	    	{
 	    		HttpSession session;
 	    		UserSession user;
@@ -52,7 +52,8 @@ public class LoginFilter implements Filter {
 	    			}
 	    		}
 	    	}
-	    	return false;
+	    	return false;*/
+	    	return OutilsWeb.getUser(req)!=null;
 	    }
 
 		@Override
