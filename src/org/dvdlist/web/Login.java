@@ -23,7 +23,7 @@ public class Login extends HttpServlet {
 		{
 			HttpSession session;
 			session=req.getSession(true);
-			user=new UserSession(tmp.isAdmin());
+			user=new UserSession(tmp.getLogin(),tmp.isAdmin());
 			session.setAttribute(USER, user);
 			//resp.setContentType("text/plain");
 			//resp.getWriter().println("Hello, world");

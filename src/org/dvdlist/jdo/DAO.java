@@ -39,7 +39,7 @@ public class DAO {
 								if(u.egal(login,password))
 								{
 									UserSession user2;
-									user2=new UserSession(u.isAdmin());
+									user2=new UserSession(u.getLogin(),u.isAdmin());
 									return user2;
 								}
 							}
@@ -102,7 +102,7 @@ public class DAO {
 		try{
 			log.warning("Début enregistre DVD");
 			pm= PMF.get().getPersistenceManager();
-			pm.getObjectIdClass(AppStore.class);
+			//pm.getObjectIdClass(AppStore.class);
 			app=getApp(pm);
 			if(app==null)
 			{
@@ -166,7 +166,7 @@ public class DAO {
 		List<String> liste_dvd=null;
 		try{
 			pm= PMF.get().getPersistenceManager();
-			pm.getObjectIdClass(AppStore.class);
+			//pm.getObjectIdClass(AppStore.class);
 			app=getApp(pm);
 			if(app==null)
 			{
@@ -181,10 +181,41 @@ public class DAO {
 				}
 			}
 			
-			pm.makePersistent(app);
+			//pm.makePersistent(app);
 		}finally{
 			pm.close();
 		}
 		return liste_dvd;
+	}
+	
+	public List<UserSession> donne_users()
+	{
+		AppStore app;
+		PersistenceManager pm=null;
+		List<UserSession> liste_users=null;
+		try{
+			pm= PMF.get().getPersistenceManager();
+			//pm.getObjectIdClass(AppStore.class);
+			app=getApp(pm);
+			if(app==null)
+			{
+				app=new AppStore();
+			}			
+			if(app.getUsers()!=null&&!app.getUsers().isEmpty())
+			{
+				liste_users=new ArrayList<UserSession>();
+				for(UserDb u:app.getUsers())
+				{
+					UserSession tmp;
+					tmp=new UserSession(u.getLogin(),u.isAdmin());
+					liste_users.add(tmp);
+				}
+			}
+			
+			//pm.makePersistent(app);
+		}finally{
+			pm.close();
+		}
+		return liste_users;
 	}
 }
