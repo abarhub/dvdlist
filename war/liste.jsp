@@ -4,13 +4,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Ma liste</title>
+<title>Liste de dvd</title>
 </head>
 <body>
+<center>
 Liste :<br/>
+</center>
+<center>
+<table border="1">
+<thead><td></td><td>Titre</td></thead>
 <%
 DAO dao;
-List<String> liste_dvd;
+List<Dvd> liste_dvd;
 int i;
 boolean est_admin=false;
 UserSession user;
@@ -25,12 +30,17 @@ liste_dvd=dao.donne_liste_dvd();
 if(liste_dvd!=null&&!liste_dvd.isEmpty())
 {
 	i=1;
-	for(String s:liste_dvd)
+	for(Dvd s:liste_dvd)
 	{
-		out.println(i+" : "+s+"<br/>");
+		out.println("<tr><td>"+i+"</td><td>"+s.getTitre()+"</td></tr>");
 		i++;
 	}
 }
+%>
+</table>
+</center>
+<center>
+<%
 if(est_admin)
 {
 %>
@@ -40,5 +50,6 @@ if(est_admin)
 }
 %>
 <a href="/deconnect">Deconnection</a><br/>
+</center>
 </body>
 </html>

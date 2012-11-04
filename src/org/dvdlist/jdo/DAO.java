@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import org.dvdlist.web.Dvd;
 import org.dvdlist.web.ImportFichier;
 import org.dvdlist.web.UserSession;
 
@@ -228,10 +229,11 @@ public class DAO {
 		log.warning("Fin enregitre DVD");
 	}
 
-	public List<String> donne_liste_dvd() {
+	public List<Dvd> donne_liste_dvd() {
 		AppStore app;
 		PersistenceManager pm=null;
-		List<String> liste_dvd=null;
+		List<Dvd> liste_dvd=null;
+		Dvd dvd0;
 		try{
 			pm= PMF.get().getPersistenceManager();
 			//pm.getObjectIdClass(AppStore.class);
@@ -242,10 +244,12 @@ public class DAO {
 			}			
 			if(app.getListe_dvd()!=null&&!app.getListe_dvd().isEmpty())
 			{
-				liste_dvd=new ArrayList<String>();
+				liste_dvd=new ArrayList<Dvd>();
 				for(DVDDb dvd:app.getListe_dvd())
 				{
-					liste_dvd.add(dvd.getNom());
+					dvd0=new Dvd();
+					dvd0.setTitre(dvd.getNom());
+					liste_dvd.add(dvd0);
 				}
 			}
 			

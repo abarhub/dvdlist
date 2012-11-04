@@ -4,13 +4,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Liste de DVD</title>
 </head>
 <body>
+<center>
 <form Method="POST" Action="login" >
 Login <input type="text" name="login"/><br/>
-password <input type="password" name="password"/><br/>
+Password <input type="password" name="password"/><br/>
 <input type="submit"/>
 </form>
+</center>
 </body>
 </html>

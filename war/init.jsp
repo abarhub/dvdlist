@@ -30,6 +30,7 @@ else if(action!=null&&action.equals("suppr"))
 }
 liste_users=dao.donne_users();
 %>
+<center>
 Liste des utilisateurs:
 <table border="1">
 <thead><td>Login</td><td>Admin</td><td></td></thead>
@@ -43,6 +44,9 @@ if(liste_users!=null)
 }
 %>
 </table>
+</center>
+<hr>
+<center>
 Nouvel utilisateur :<br/>
 <form method="post" Action="?" autocomplete="off">
 <input type="hidden" name="action" value="ajouter" />
@@ -54,7 +58,10 @@ Nouvel utilisateur :<br/>
 <input type="checkbox" name="admin" id="admin" /><br />
 <input type="submit" value="Ajouter" />
 </form>
+</center>
+<center>
 <a href="/liste.jsp">Liste des DVD</a><br/>
 <a href="/deconnect">Deconnection</a><br/>
+</center>
 </body>
 </html>
