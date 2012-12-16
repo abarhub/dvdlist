@@ -12,7 +12,7 @@ Liste :<br/>
 </center>
 <center>
 <table border="1">
-<thead><td></td><td>Titre</td></thead>
+<thead><td></td><td>Titre</td><td>DVD</td><td>Blue Ray</td><td>Digital Copy</td></thead>
 <%
 DAO dao;
 List<Dvd> liste_dvd;
@@ -32,7 +32,7 @@ if(liste_dvd!=null&&!liste_dvd.isEmpty())
 	i=1;
 	for(Dvd s:liste_dvd)
 	{
-		out.println("<tr><td>"+i+"</td><td>"+s.getTitre()+"</td></tr>");
+		out.println("<tr><td>"+i+"</td><td>"+s.getTitre()+"</td><td>"+((s.isDvd())?"oui":"non")+"</td><td>"+((s.isBlue_ray())?"oui":"non")+"</td><td>"+((s.isVersion_digitale())?"oui":"non")+"</td></tr>");
 		i++;
 	}
 }
