@@ -117,6 +117,7 @@ public class ImportFichier {
 
     private List<DVDDb> convertie(Document doc) {
 	List<DVDDb> liste;
+	boolean dvd0,blue_ray,digital_copie;
 	liste=new ArrayList<DVDDb>();
 	if(doc!=null)
 	{
@@ -150,24 +151,73 @@ public class ImportFichier {
 		    Element elt;
 		    if(element.getName().equals("DVD"))
 		    {
-			for ( Iterator i2 = element.elementIterator(); i2.hasNext(); ) {
-			    elt = (Element) i2.next();
-			    if(elt.getName().equals("Title"))
-			    {
-				DVDDb dvd;
-				String s=elt.getTextTrim();
-				if(s!=null&&!s.isEmpty()&&!s.trim().isEmpty())
-				{
-				    s=s.trim();
-				    dvd=new DVDDb();
-				    dvd.setNom(s);
-				    liste.add(dvd);
-				    log.log(Level.INFO,
-					    "ajout de '"+dvd.getNom()+"','"+elt.getName()+"','"+
-					    elt.getText()+"','"+elt.asXML()+"','"+elt.getStringValue()+"'");
+		    	DVDDb dvd2=null;
+		    	dvd0=false;
+		    	blue_ray=false;
+		    	digital_copie=false;
+				for ( Iterator i2 = element.elementIterator(); i2.hasNext(); ) {
+				    elt = (Element) i2.next();
+				    if(elt.getName().equals("Title"))
+				    {
+						DVDDb dvd;
+						String s=elt.getTextTrim();
+						if(s!=null&&!s.isEmpty()&&!s.trim().isEmpty())
+						{
+						    s=s.trim();
+						    dvd=new DVDDb();
+						    dvd.setNom(s);
+						    dvd2=dvd;
+						    liste.add(dvd);
+						    log.log(Level.INFO,
+							    "ajout de '"+dvd.getNom()+"','"+elt.getName()+"','"+
+							    elt.getText()+"','"+elt.asXML()+"','"+elt.getStringValue()+"'");
+						}
+				    }
+				    else if(elt.getName().equals("MediaTypes"))
+				    {
+				    	for ( Iterator j = elt.elementIterator(); j.hasNext(); ) {
+						    Element elt2 = (Element) j.next();
+						    String s;
+						    if(elt2.getName().equals("DVD"))
+						    {
+						    	s=elt2.getTextTrim();
+						    	if(s!=null&&s.equalsIgnoreCase("true"))
+						    	{
+						    		dvd0=true;
+						    	}
+						    }
+						    else if(elt2.getName().equals("BluRay"))
+						    {
+						    	s=elt2.getTextTrim();
+						    	if(s!=null&&s.equalsIgnoreCase("true"))
+						    	{
+						    		blue_ray=true;
+						    	}
+						    }
+				    	}
+				    }
+				    else if(elt.getName().equals("Features"))
+				    {
+				    	for ( Iterator j = elt.elementIterator(); j.hasNext(); ) {
+						    Element elt2 = (Element) j.next();
+						    String s;
+						    if(elt2.getName().equals("FeatureDigitalCopy"))
+						    {
+						    	s=elt2.getTextTrim();
+						    	if(s!=null&&s.equalsIgnoreCase("true"))
+						    	{
+						    		digital_copie=true;
+						    	}
+						    }
+				    	}
+				    }
 				}
-			    }
-			}
+				if(dvd2!=null)
+				{
+					dvd2.setDvd(Boolean.valueOf(dvd0));
+					dvd2.setBlue_ray(Boolean.valueOf(blue_ray));
+					dvd2.setDigital_copy(Boolean.valueOf(digital_copie));
+				}
 		    }
 		}
 	    }

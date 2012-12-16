@@ -205,6 +205,12 @@ public class DAO {
 							log.warning("update '"+dvd.getNom()+"'");
 							tmp.setNom(dvd.getNom());
 						}
+						if(!egal(tmp.getDvd(),dvd.getDvd()))
+							tmp.setDvd(dvd.getDvd());
+						if(!egal(tmp.getBlue_ray(),dvd.getBlue_ray()))
+							tmp.setBlue_ray(dvd.getBlue_ray());
+						if(!egal(tmp.getDigital_copy(),dvd.getDigital_copy()))
+							tmp.setDigital_copy(dvd.getDigital_copy());
 					}
 					else
 					{
@@ -229,6 +235,16 @@ public class DAO {
 		log.warning("Fin enregitre DVD");
 	}
 
+	private boolean egal(Boolean dvd, Boolean dvd2) {
+		if(dvd==dvd2)
+			return true;
+		if(dvd==null&&dvd2!=null)
+			return false;
+		if(dvd!=null&&dvd2==null)
+			return false;
+		return dvd.booleanValue()==dvd2.booleanValue();
+	}
+
 	public List<Dvd> donne_liste_dvd() {
 		AppStore app;
 		PersistenceManager pm=null;
@@ -249,6 +265,9 @@ public class DAO {
 				{
 					dvd0=new Dvd();
 					dvd0.setTitre(dvd.getNom());
+					dvd0.setDvd(dvd.getDvd()!=null&&dvd.getDvd().booleanValue());
+					dvd0.setBlue_ray(dvd.getBlue_ray()!=null&&dvd.getBlue_ray().booleanValue());
+					dvd0.setVersion_digitale(dvd.getDigital_copy()!=null&&dvd.getDigital_copy().booleanValue());
 					liste_dvd.add(dvd0);
 				}
 			}

@@ -29,5 +29,7 @@
   -->
   
   <sessions-enabled>true</sessions-enabled>
+  
+  <async-session-persistence enabled="false" />
 
 </appengine-web-app>
