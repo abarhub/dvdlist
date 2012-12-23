@@ -68,7 +68,7 @@ public class Upload extends HttpServlet {
 		          s2=null;
 		          res.getWriter().print("<html><body>");
 		          res.getWriter().print("Salut<br/>"+s+"<br/>");
-		          res.getWriter().print("<a href=\"/liste.jsp\">Liste DVD</a><br/>");
+		          res.getWriter().print("<a href=\"/liste.jsf\">Liste DVD</a><br/>");
 		          res.getWriter().print("<a href=\"/deconnect\">Deconnection</a><br/>");
 		          res.getWriter().print("</body></html>");
 		        }

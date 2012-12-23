@@ -16,7 +16,7 @@
 </form>
 </center>
 <center>
-<a href="/liste.jsp">Liste DVD</a><br/>
+<a href="/liste.jsf">Liste DVD</a><br/>
 <a href="/deconnect">Deconnection</a><br/>
 </center>
 </body>

@@ -16,7 +16,7 @@ public class Deconnexion extends HttpServlet {
 			session.invalidate();
 		}
 		try {
-			req.getRequestDispatcher("/index.jsp").forward(req, resp);
+			req.getRequestDispatcher("/index.jsf").forward(req, resp);
 		} catch (ServletException e) {
 			e.printStackTrace();
 		}

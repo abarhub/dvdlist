@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:ui="http://java.sun.com/jsf/facelets">
+   <h:head id="head">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <title>Liste des DVDs</title>
+   </h:head>
+   <h:body id="body">
+   <h:messages layout="table" errorClass="errors"/>
+	<h:form >
+	<h:dataTable value="#{user.listeDvds}" var="dvd">
+		<f:facet name="caption">Liste des DVDs</f:facet>
+		<h:column>
+			<f:facet name="header">Titre</f:facet>
+			#{dvd.titre}
+		</h:column>
+		<h:column>
+			<f:facet name="header">DVD</f:facet>
+			#{(dvd.dvd)?"oui":"non"}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Blue Ray</f:facet>
+			#{(dvd.blue_ray)?"oui":"non"}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Copy Digital</f:facet>
+			#{(dvd.version_digitale)?"oui":"non"}
+		</h:column>
+	</h:dataTable><br/>
+	<h:commandLink  action="#{user.getUrlUpload}" rendered="#{user.admin}">
+		<h:outputText value="Upload"/>
+	</h:commandLink><br/>
+	<h:commandLink action="init" rendered="#{user.admin}">
+		<h:outputText value="Admin"/>
+	</h:commandLink><br/>
+	<h:commandLink action="#{user.deconnection}">
+		<h:outputText value="Déconnexion"/>
+	</h:commandLink><br/>
+	</h:form>
+   </h:body>
+
+</html>
