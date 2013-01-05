@@ -10,7 +10,21 @@
    </h:head>
    <h:body id="body">
       df
-
+		<h:form >
+	<h:dataTable value="#{gestionUsers.listUsers}" var="users">
+		<f:facet name="caption">Liste des Utilisateurs</f:facet>
+		<h:column>
+			<f:facet name="header">login</f:facet>
+			#{users.login}
+		</h:column>
+	</h:dataTable><br/>
+	<h:commandLink action="liste">
+		<h:outputText value="Retour"/>
+	</h:commandLink><br/>
+	<h:commandLink action="#{user.deconnection}">
+		<h:outputText value="Déconnexion"/>
+	</h:commandLink><br/>
+	</h:form>
    </h:body>
 
 </html>
