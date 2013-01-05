@@ -82,6 +82,29 @@ public class UserSession implements Serializable {
 	    }  
 	}
 	
+	public int getSortByTitre(Dvd dvd1,Dvd dvd2)
+	{
+		if(dvd1==null&&dvd2==null)
+			return 0;
+		if(dvd1==null)
+			return -1;
+		if(dvd2==null)
+			return 1;
+		String nom1,nom2;
+		nom1=dvd1.getTitre();
+		nom2=dvd2.getTitre();
+		if(nom1==null&&nom2==null)
+			return 0;
+		if(nom1==nom2)
+			return 0;
+		if(nom1==null)
+			return -1;
+		if(nom2==null)
+			return 1;
+		return nom1.compareToIgnoreCase(nom2);
+		
+	}
+	
 	public boolean isAdmin() {
 		return admin;
 	}

@@ -1,16 +1,20 @@
 package org.dvdlist.web;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+
+import org.dvdlist.jdo.DAO;
 
 @ManagedBean(name="gestionUsers")
 @ApplicationScoped
 public class GestionUsers implements Serializable {
 
+	private static final Logger log =Logger.getLogger(GestionUsers.class.getName());
+	
 	/**
 	 * 
 	 */
@@ -22,16 +26,12 @@ public class GestionUsers implements Serializable {
 	
 	public List<UserComplet> getListUsers(){
 		List<UserComplet> liste;
-		UserComplet tmp;
-		
-		liste=new ArrayList<UserComplet>();
-		tmp=new UserComplet();
-		tmp.setLogin("aaa");
-		liste.add(tmp);
-		tmp=new UserComplet();
-		tmp.setLogin("bbb");
-		liste.add(tmp);
-		
+		DAO dao;
+		log.info("Récupération des utilisateurs");
+		dao=new DAO();
+		liste=dao.donne_users2();
+		log.info(((liste==null)?0:liste.size())+" utilisateurs récupérés");
+				
 		return liste;
 	}
 }

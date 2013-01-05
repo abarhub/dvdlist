@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
   xmlns:f="http://java.sun.com/jsf/core"
   xmlns:h="http://java.sun.com/jsf/html"
-  xmlns:ui="http://java.sun.com/jsf/facelets">
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:fn="http://java.sun.com/jsp/jstl/functions">
    <h:head id="head">
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
       <title>Liste des DVDs</title>
@@ -11,30 +13,37 @@
    <h:body id="body">
    <h:messages layout="table" errorClass="errors"/>
 	<h:form >
-	<h:dataTable value="#{user.listeDvds}" var="dvd">
-		<f:facet name="caption">Liste des DVDs</f:facet>
-		<h:column>
+	<p:dataTable value="#{user.listeDvds}" var="dvd" dynamic="true">
+		<f:facet name="header">Liste des DVDs</f:facet>
+		<p:column sortBy="#{dvd.titre}" filterBy="#{dvd.titre}" 
+				filterMatchMode="contains" sortFunction="#{user.sortByTitre}">
 			<f:facet name="header">Titre</f:facet>
-			#{dvd.titre}
-		</h:column>
-		<h:column>
+			<h:outputText value="#{dvd.titre}" />
+		</p:column>
+		<p:column sortBy="#{dvd.dvd}" filterBy="#{dvd.dvd}">
 			<f:facet name="header">DVD</f:facet>
 			#{(dvd.dvd)?"oui":"non"}
-		</h:column>
-		<h:column>
+		</p:column>
+		<p:column sortBy="#{dvd.blue_ray}" filterBy="#{dvd.blue_ray}">
 			<f:facet name="header">Blue Ray</f:facet>
 			#{(dvd.blue_ray)?"oui":"non"}
-		</h:column>
-		<h:column>
+		</p:column>
+		<p:column sortBy="#{dvd.version_digitale}" filterBy="#{dvd.version_digitale}">
 			<f:facet name="header">Copy Digital</f:facet>
 			#{(dvd.version_digitale)?"oui":"non"}
-		</h:column>
-	</h:dataTable><br/>
+		</p:column>
+		<f:facet name="footer">
+		#{fn:length(user.listeDvds)} dvds
+		</f:facet>
+	</p:dataTable><br/>
 	<h:commandLink  action="#{user.getUrlUpload}" rendered="#{user.admin}">
 		<h:outputText value="Upload"/>
 	</h:commandLink><br/>
 	<h:commandLink action="init" rendered="#{user.admin}">
-		<h:outputText value="Admin"/>
+		<h:outputText value="Gestion des utilisateurs"/>
+	</h:commandLink><br/>
+	<h:commandLink>
+		<h:outputText value="Recharger la page"/>
 	</h:commandLink><br/>
 	<h:commandLink action="#{user.deconnection}">
 		<h:outputText value="Déconnexion"/>

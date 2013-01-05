@@ -3,23 +3,34 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
   xmlns:f="http://java.sun.com/jsf/core"
   xmlns:h="http://java.sun.com/jsf/html"
-  xmlns:ui="http://java.sun.com/jsf/facelets">
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:fn="http://java.sun.com/jsp/jstl/functions">
    <h:head id="head">
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
       <title>Liste des utilisateurs</title>
    </h:head>
    <h:body id="body">
-      df
 		<h:form >
-	<h:dataTable value="#{gestionUsers.listUsers}" var="users">
-		<f:facet name="caption">Liste des Utilisateurs</f:facet>
-		<h:column>
+	<p:dataTable value="#{gestionUsers.listUsers}" var="users">
+		<f:facet name="header">Liste des Utilisateurs</f:facet>
+		<p:column sortBy="#{users.login}" filterBy="#{users.login}">
 			<f:facet name="header">login</f:facet>
-			#{users.login}
-		</h:column>
-	</h:dataTable><br/>
+			<h:outputText value="#{users.login}"/>
+		</p:column>
+		<p:column sortBy="#{users.admin}" filterBy="#{users.admin}">
+			<f:facet name="header">Admin</f:facet>
+			<h:outputText value="#{users.admin}"/>
+		</p:column>
+		<f:facet name="footer">
+		#{fn:length(gestionUsers.listUsers)} utilisateurs
+		</f:facet>
+	</p:dataTable><br/>
 	<h:commandLink action="liste">
 		<h:outputText value="Retour"/>
+	</h:commandLink><br/>
+	<h:commandLink>
+		<h:outputText value="Recharger la page"/>
 	</h:commandLink><br/>
 	<h:commandLink action="#{user.deconnection}">
 		<h:outputText value="Déconnexion"/>

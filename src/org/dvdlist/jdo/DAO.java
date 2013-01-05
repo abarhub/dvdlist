@@ -8,12 +8,12 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import org.dvdlist.web.Dvd;
-import org.dvdlist.web.ImportFichier;
+import org.dvdlist.web.UserComplet;
 import org.dvdlist.web.UserSession;
 
 public class DAO {
 
-	private static final Logger log =Logger.getLogger(ImportFichier.class.getName());
+	private static final Logger log =Logger.getLogger(DAO.class.getName());
 	
 	public DAO() {
 		// TODO Auto-generated constructor stub
@@ -23,7 +23,6 @@ public class DAO {
 		if(login!=null&&password!=null)
 		{
 			{
-				UserDb user;
 				AppStore app;
 				PersistenceManager pm=null;
 				try{
@@ -279,7 +278,7 @@ public class DAO {
 		return liste_dvd;
 	}
 	
-	public List<UserSession> donne_users()
+	/*public List<UserSession> donne_users()
 	{
 		AppStore app;
 		PersistenceManager pm=null;
@@ -299,6 +298,40 @@ public class DAO {
 				{
 					UserSession tmp;
 					tmp=new UserSession(u.getLogin(),u.isAdmin());
+					liste_users.add(tmp);
+				}
+			}
+			
+			//pm.makePersistent(app);
+		}finally{
+			pm.close();
+		}
+		return liste_users;
+	}*/
+
+	
+	public List<UserComplet> donne_users2()
+	{
+		AppStore app;
+		PersistenceManager pm=null;
+		List<UserComplet> liste_users=null;
+		try{
+			pm= PMF.get().getPersistenceManager();
+			//pm.getObjectIdClass(AppStore.class);
+			app=getApp(pm);
+			if(app==null)
+			{
+				app=new AppStore();
+			}			
+			if(app.getUsers()!=null&&!app.getUsers().isEmpty())
+			{
+				liste_users=new ArrayList<UserComplet>();
+				for(UserDb u:app.getUsers())
+				{
+					UserComplet tmp;
+					tmp=new UserComplet();
+					tmp.setLogin(u.getLogin());
+					tmp.setAdmin(u.isAdmin());
 					liste_users.add(tmp);
 				}
 			}
