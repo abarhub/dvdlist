@@ -24,10 +24,10 @@
 		<param-value>client</param-value>
 	</context-param>
 	<!-- Set the default suffix for JSF pages to .xhtml -->
-	 <context-param>
+	 <!-- <context-param>
       <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
       <param-value>.xhtml</param-value>
-   </context-param>
+   </context-param> -->
 	 <!-- Disable use of threading for single-threaded environments such as
         the Google AppEngine. -->
    <context-param>
@@ -101,9 +101,9 @@
 	</servlet-mapping> -->
 	<welcome-file-list>
 		<welcome-file>index.jsf</welcome-file>
-		<welcome-file>index.xhtml</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>index.html</welcome-file>
+<!-- 		<welcome-file>index.xhtml</welcome-file> -->
+		<!-- <welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.html</welcome-file>-->
 	</welcome-file-list>
  <servlet>
   <servlet-name>SystemServiceServlet</servlet-name>
