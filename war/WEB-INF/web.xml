@@ -119,6 +119,21 @@
  </servlet-mapping>
  
  <filter>
+      <display-name>AppEngine Bug 8145 Work Around</display-name>
+      <description>
+      Suppresses the If Modified Since header until GAE bug 8145 is fixed.
+      </description>
+      <filter-name>GAEBug8145WorkAround</filter-name>
+      <filter-class>org.dvdlist.web.HttpIfModifiedSinceFix</filter-class>
+   </filter>
+  
+
+   <filter-mapping>
+      <filter-name>GAEBug8145WorkAround</filter-name>
+      <url-pattern>/*</url-pattern>
+   </filter-mapping>
+ 
+ <filter>
       <filter-name>Upload Filter</filter-name>
       <filter-class>org.dvdlist.web.upload.UploadFilter</filter-class>
       <init-param>
