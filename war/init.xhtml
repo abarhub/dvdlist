@@ -22,10 +22,35 @@
 			<f:facet name="header">Admin</f:facet>
 			<h:outputText value="#{users.admin}"/>
 		</p:column>
+		<p:column >
+			<h:commandLink value="Supprime" action="#{gestionUsers.suppr(users)}"/>
+		</p:column>
 		<f:facet name="footer">
 		#{fn:length(gestionUsers.listUsers)} utilisateurs
 		</f:facet>
-	</p:dataTable><br/>
+	</p:dataTable>
+	</h:form><br/>
+	
+	<h:form>
+	<h:panelGrid columns="2">
+
+        <h:outputLabel for="username">Username:</h:outputLabel>
+
+        <h:inputText id="username" value="#{userForm.login}"/>
+
+        <h:outputLabel for="password">Password:</h:outputLabel>
+
+        <h:inputText id="password" value="#{userForm.password}"/>
+        
+        <h:outputLabel for="admin">Admin:</h:outputLabel>
+        
+        <h:selectBooleanCheckbox id="admin" value="#{userForm.admin}" />
+
+		<h:commandButton value="Ajouter" action="#{gestionUsers.ajoute(userForm)}"/>
+    </h:panelGrid>
+    </h:form><br/>
+	
+	<h:form>
 	<h:commandLink action="liste">
 		<h:outputText value="Retour"/>
 	</h:commandLink><br/>

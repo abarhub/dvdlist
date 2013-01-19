@@ -34,4 +34,36 @@ public class GestionUsers implements Serializable {
 				
 		return liste;
 	}
+	
+	public String suppr(UserComplet user){
+		
+		if(user!=null&&!vide(user.getLogin()))
+		{
+			DAO dao = new DAO();
+			log.info("Suppression de l'utilisateur "+user.getLogin());
+			dao.suppr_user(user.getLogin());
+		}
+		return null;
+	}
+
+	public String ajoute(UserForm user)
+	{
+		if(user!=null&&!vide(user.getLogin())&&!vide(user.getPassword()))
+		{
+			DAO dao = new DAO();
+			log.info("Ajout de l'utilisateur "+user.getLogin());
+			dao.add_user(user.getLogin(),user.getPassword(),user.isAdmin());
+			user.setLogin(null);
+			user.setPassword(null);
+			user.setAdmin(false);
+		}
+		return "";
+	}
+	
+
+	private boolean vide(String s) {
+		return s==null||s.trim().length()==0;
+	}
+
+	
 }
