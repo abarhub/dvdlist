@@ -84,39 +84,116 @@ public class DAO {
 		}
 	}
 
-	public void add_user(String login,String password,boolean admin){
+	public Resultat add_user(String login,String password,boolean admin){
 		UserDb user;
 		AppStore app;
 		PersistenceManager pm=null;
+		Resultat res=new Resultat();
+		int len;
 		try{
 			log.warning("add user "+login);
 			if(login!=null&&login.length()>0&&password!=null&&password.length()>0)
 			{
-				pm= PMF.get().getPersistenceManager();
-				app=getApp(pm);
-				if(app==null)
+				len=login.length();
+				if(len<5||len>100)
 				{
-					app=new AppStore();
+					res.add_error("Longueur du login incorrecte !");
 				}
-				user=new UserDb();
-				user.setLogin(login);
-				user.setPassword(password);
-				if(admin)
-					user.setAdmin(Boolean.TRUE);
-				else
-					user.setAdmin(Boolean.FALSE);
-				app.getUsers().add(user);
-				pm.makePersistent(app);
+				len=password.length();
+				if(len<8||len>100)
+				{
+					res.add_error("Longueur du mot de passe incorrecte !");
+				}
+				if(invalide(login))
+				{
+					log.warning("Caractères invalide pour ce login : '"+login+"'");
+					res.add_error("Login incorrecte !");
+				}
+				if(!res.isError())
+				{
+					pm= PMF.get().getPersistenceManager();
+					app=getApp(pm);
+					if(app==null)
+					{
+						app=new AppStore();
+					}
+					if(app!=null)
+					{
+						if(app.getUsers()!=null&&!app.getUsers().isEmpty())
+						{
+							for(UserDb u:app.getUsers())
+							{
+								if(u!=null&&u.getLogin()!=null&&u.getLogin().equalsIgnoreCase(login))
+								{
+									log.warning("Login deja présent : "+login);
+									res.add_error("Login incorrecte !");
+								}
+							}
+						}
+					}
+					if(!res.isError())
+					{
+						user=new UserDb();
+						user.setLogin(login);
+						user.setPassword(password);
+						if(admin)
+							user.setAdmin(Boolean.TRUE);
+						else
+							user.setAdmin(Boolean.FALSE);
+						app.getUsers().add(user);
+						pm.makePersistent(app);
+						res.setTraitement(true);
+					}
+				}
+			}
+			else
+			{
+				res.add_error("Le login et le mot de passe ne peuvent pas être null");
 			}
 		}finally{
-			pm.close();
+			if(pm!=null)
+				pm.close();
 		}
+		return res;
 	}
 
-	public void suppr_user(String login){
+	private boolean invalide(String login) {
+		if(login!=null)
+		{
+			for(int i=0;i<login.length();i++)
+			{
+				char c=login.charAt(i);
+				if(Character.isLetterOrDigit(c))
+				{// caractères valides
+					
+				}
+				else
+				{
+					switch(c)
+					{
+					case '_':case '-':case '=':case '@':
+					case '²':case '&':case 'é':case '"':
+					case '(':case 'è':case 'ç':
+					case 'à':case ')':case '~':
+					case '{':case '[':case '|':
+					case ']':case '}':
+						// caractères valides
+						break;
+					default:
+						log.warning("caractère invalide:\'"+c+"\'("+((int)c)+")");
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	public Resultat suppr_user(String login){
 		UserDb user;
 		AppStore app;
 		PersistenceManager pm=null;
+		Resultat res=new Resultat();
 		try{
 			log.warning("Suppr user "+login);
 			if(login!=null&&login.length()>0)
@@ -141,15 +218,23 @@ public class DAO {
 					user=app.getUsers().get(i);
 					if(user!=null&&user.getLogin()!=null&&user.getLogin().equals(login))
 					{
+						log.warning("user '"+user.getLogin()+"' supprimé");
 						app.getUsers().remove(i);
 						i--;
+						res.setTraitement(true);
 					}
 				}
 				pm.makePersistent(app);
 			}
+			else
+			{
+				res.add_error("Le login ne peut pas être null");
+			}
 		}finally{
-			pm.close();
+			if(pm!=null)
+				pm.close();
 		}
+		return res;
 	}
 
 	private AppStore getApp(PersistenceManager pm) {

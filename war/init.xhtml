@@ -32,15 +32,20 @@
 	</h:form><br/>
 	
 	<h:form>
+	<h:messages id= "champMessages" errorStyle= "color: red" />
 	<h:panelGrid columns="2">
 
-        <h:outputLabel for="username">Username:</h:outputLabel>
+        <h:outputLabel for="username">Login:</h:outputLabel>
 
-        <h:inputText id="username" value="#{userForm.login}"/>
+        <h:inputText id="username" value="#{userForm.login}" required="true" >
+        		<f:validateLength minimum="5" maximum="30"/>
+        </h:inputText>
 
-        <h:outputLabel for="password">Password:</h:outputLabel>
+        <h:outputLabel for="password">Mot de passe:</h:outputLabel>
 
-        <h:inputText id="password" value="#{userForm.password}"/>
+        <h:inputText id="password" value="#{userForm.password}" required="true" >
+        	<f:validateLength minimum="8" maximum="50"/>
+        </h:inputText>
         
         <h:outputLabel for="admin">Admin:</h:outputLabel>
         
