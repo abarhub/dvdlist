@@ -10,11 +10,15 @@
    </h:head>
    <h:body id="body">
    <h:messages layout="table" errorClass="errors"/>
+   <center>
 	<h:form >
 	Login <h:inputText value="#{userLogin.login}"/><br/>
 	Password <h:inputSecret value="#{userLogin.password}"/><br/>
 	<h:commandButton value="Connexion" action="#{userLogin.checkUser}"/>
-	</h:form>
+	</h:form><br/><br/>
+	<img src="https://developers.google.com/appengine/images/appengine-noborder-120x30.gif"
+			alt="Powered by Google App Engine" />
+	</center>
    </h:body>
 
 </html>

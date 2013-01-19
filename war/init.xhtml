@@ -11,6 +11,7 @@
       <title>Liste des utilisateurs</title>
    </h:head>
    <h:body id="body">
+   		<center>
 		<h:form >
 	<p:dataTable value="#{gestionUsers.listUsers}" var="users">
 		<f:facet name="header">Liste des Utilisateurs</f:facet>
@@ -30,7 +31,9 @@
 		</f:facet>
 	</p:dataTable>
 	</h:form><br/>
+	</center>
 	
+	<center>
 	<h:form>
 	<h:messages id= "champMessages" errorStyle= "color: red" />
 	<h:panelGrid columns="2">
@@ -54,7 +57,9 @@
 		<h:commandButton value="Ajouter" action="#{gestionUsers.ajoute(userForm)}"/>
     </h:panelGrid>
     </h:form><br/>
+    </center>
 	
+	<center>
 	<h:form>
 	<h:commandLink action="liste">
 		<h:outputText value="Retour"/>
@@ -66,6 +71,7 @@
 		<h:outputText value="Déconnexion"/>
 	</h:commandLink><br/>
 	</h:form>
+	</center>
    </h:body>
 
 </html>

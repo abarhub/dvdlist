@@ -36,6 +36,7 @@
 		#{fn:length(user.listeDvds)} dvds
 		</f:facet>
 	</p:dataTable><br/>
+	<center>
 	<h:commandLink  action="#{user.getUrlUpload}" rendered="#{user.admin}">
 		<h:outputText value="Upload"/>
 	</h:commandLink><br/>
@@ -48,6 +49,7 @@
 	<h:commandLink action="#{user.deconnection}">
 		<h:outputText value="Déconnexion"/>
 	</h:commandLink><br/>
+	</center>
 	</h:form>
    </h:body>
 
