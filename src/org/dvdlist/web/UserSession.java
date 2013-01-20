@@ -22,17 +22,18 @@ public class UserSession implements Serializable {
 	private String login;
 
 	private boolean admin;
-	//private boolean connecte;
+	private final boolean connecte;
 	
-	/*public UserSession()
+	public UserSession()
 	{
-		
-	}*/
+		connecte=false;
+	}
 	
 	public UserSession(String login,boolean admin)
 	{
 		this.login=login;
 		this.admin=admin;
+		connecte=true;
 	}
 
 	public List<Dvd> getListeDvds()
@@ -53,20 +54,6 @@ public class UserSession implements Serializable {
 		}
 		return "index";
 	}
-	
-	/*public String checkUser()
-	{
-		if(login!=null&&login.equals("abc2"))
-		{
-			connecte=true;
-			return "welcome";
-		}
-		else
-		{
-			connecte=false;
-			return "";
-		}
-	}*/
 	
 	public void getUrlUpload()
 	{
@@ -119,5 +106,9 @@ public class UserSession implements Serializable {
 
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
+	}
+
+	public boolean isConnecte() {
+		return connecte;
 	}
 }

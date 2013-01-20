@@ -1,19 +1,28 @@
 package org.dvdlist.web;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
-import javax.servlet.http.*;
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class LoginFilter implements Filter {
 
+	private static final Logger log =Logger.getLogger(LoginFilter.class.getName());
+	
 	    protected ServletContext servletContext;
 
 	    @Override
 	    public void init(FilterConfig filterConfig) {
 	        servletContext = filterConfig.getServletContext();
 	    }
-	    
 
 	    @Override
 	    public void doFilter(
@@ -22,13 +31,17 @@ public class LoginFilter implements Filter {
 	        HttpServletRequest req = (HttpServletRequest)request;
 	        HttpServletResponse resp = (HttpServletResponse)response;
 	    
+	        log.entering("LoginFilter", "doFilter");
 	        if (!isAuth(req)) {
-	            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);  
+	        	log.info("Page non autorisé:"+req.getPathTranslated());
+	            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED); 
+	            log.exiting("LoginFilter", "doFilter");
 	            return; //break filter chain, requested JSP/servlet will not be executed
 	        }
 	    
 	        //propagate to next element in the filter chain, ultimately JSP/ servlet gets executed
-	        chain.doFilter(request, response);        
+	        chain.doFilter(request, response);
+	        log.exiting("LoginFilter", "doFilter");
 	    }
 
 	    /**
@@ -37,23 +50,10 @@ public class LoginFilter implements Filter {
 	     * @return true when authentication is deemed valid
 	     */
 	    boolean isAuth(HttpServletRequest req){
-	    	/*if(req!=null&&req.getSession(false)!=null)
-	    	{
-	    		HttpSession session;
-	    		UserSession user;
-	    		session=req.getSession(false);
-	    		if(session!=null)
-	    		{
-	    			Object o;
-	    			o=session.getAttribute(Login.USER);
-	    			if(o!=null&&o instanceof UserSession)
-	    			{
-	    				return true;
-	    			}
-	    		}
-	    	}
-	    	return false;*/
-	    	return OutilsWeb.getUser(req)!=null;
+	    	UserSession user;
+	    	user=OutilsWeb.getUser(req);
+	    	log.info("user:"+user+";connected="+((user!=null&&user.isConnecte())?"true":"false"));
+	    	return user!=null&&user.isConnecte();
 	    }
 
 		@Override

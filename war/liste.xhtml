@@ -9,10 +9,14 @@
    <h:head id="head">
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
       <title>Liste des DVDs</title>
+		<h:panelGroup rendered="#{!user.connecte}">
+			<meta http-equiv="Refresh" content="0; url=index.jsf" />
+		</h:panelGroup>
    </h:head>
    <h:body id="body">
    <h:messages layout="table" errorClass="errors"/>
-	<h:form >
+   <h:form >
+   <h:panelGroup rendered="#{user.connecte}">
 	<p:dataTable value="#{user.listeDvds}" var="dvd" dynamic="true">
 		<f:facet name="header">Liste des DVDs</f:facet>
 		<p:column sortBy="#{dvd.titre}" filterBy="#{dvd.titre}" 
@@ -46,10 +50,13 @@
 	<h:commandLink>
 		<h:outputText value="Recharger la page"/>
 	</h:commandLink><br/>
+	</center>
+	</h:panelGroup>
+	<center>
 	<h:commandLink action="#{user.deconnection}">
 		<h:outputText value="Déconnexion"/>
 	</h:commandLink><br/>
-	</center>
+	</center>	
 	</h:form>
    </h:body>
 

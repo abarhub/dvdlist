@@ -10,7 +10,7 @@
 <center>
 <form method="post" Action="upload" enctype="multipart/form-data">
 <input type="hidden" name="MAX_FILE_SIZE" value="5242880" />
-<label for="icone">Fichier à uploader (JPG, PNG ou GIF | max. 5Mo) :</label><br />
+<label for="icone">Fichier à uploader (XML | max. 5Mo) :</label><br />
 <input type="file" name="fichier" id="icone" /><br />
 <input type="submit" name="submit" value="Envoyer" />
 </form>

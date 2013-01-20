@@ -43,6 +43,56 @@
          pick up new versions of resources when ProjectStage is development.
       </description>
    </context-param>
+   
+   <!-- Le filtre d'autorisation -->
+      
+ <filter>
+    <description>Requires user to log in as a member</description>
+    <filter-name>MemberLoginFilter</filter-name>
+    <filter-class>org.dvdlist.web.LoginFilter</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>MemberLoginFilter</filter-name>
+    <url-pattern>/liste.jsp</url-pattern>
+</filter-mapping>
+<filter-mapping>
+    <filter-name>MemberLoginFilter</filter-name>
+    <url-pattern>/upload.jsp</url-pattern>
+</filter-mapping>
+<filter-mapping>
+    <filter-name>MemberLoginFilter</filter-name>
+    <url-pattern>/upload</url-pattern>
+</filter-mapping>
+<filter-mapping>
+    <filter-name>MemberLoginFilter</filter-name>
+    <url-pattern>/init.jsp</url-pattern>
+</filter-mapping>
+<filter-mapping>
+    <filter-name>MemberLoginFilter</filter-name>
+    <url-pattern>/init.*</url-pattern>
+</filter-mapping>
+<filter-mapping>
+    <filter-name>MemberLoginFilter</filter-name>
+    <url-pattern>/init.jsf</url-pattern>
+</filter-mapping>
+<filter-mapping>
+    <filter-name>MemberLoginFilter</filter-name>
+    <url-pattern>/liste.*</url-pattern>
+</filter-mapping>
+<filter-mapping>
+    <filter-name>MemberLoginFilter</filter-name>
+    <url-pattern>/list.*</url-pattern>
+</filter-mapping>
+<filter-mapping>
+    <filter-name>MemberLoginFilter</filter-name>
+    <url-pattern>/upload.*</url-pattern>
+</filter-mapping>
+<filter-mapping>
+    <filter-name>MemberLoginFilter</filter-name>
+    <url-pattern>/upload.jsf</url-pattern>
+</filter-mapping>
+ 
+   
    <!-- ***** Specify JBoss Expression Language Over Default -->
    <context-param>     
       <param-name>com.sun.faces.expressionFactory</param-name>
@@ -133,6 +183,8 @@
       <url-pattern>/*</url-pattern>
    </filter-mapping>
  
+ 
+ 
  <filter>
       <filter-name>Upload Filter</filter-name>
       <filter-class>org.dvdlist.web.upload.UploadFilter</filter-class>
@@ -156,28 +208,6 @@
       <filter-name>Upload Filter</filter-name>
       <url-pattern>/upload.jsf</url-pattern>
    </filter-mapping>
- 
- <filter>
-    <description>Requires user to log in as a member</description>
-    <filter-name>MemberLoginFilter</filter-name>
-    <filter-class>org.dvdlist.web.LoginFilter</filter-class>
-</filter>
-<filter-mapping>
-    <filter-name>MemberLoginFilter</filter-name>
-    <url-pattern>/liste.jsp</url-pattern>
-</filter-mapping>
-<filter-mapping>
-    <filter-name>MemberLoginFilter</filter-name>
-    <url-pattern>/upload.jsp</url-pattern>
-</filter-mapping>
-<filter-mapping>
-    <filter-name>MemberLoginFilter</filter-name>
-    <url-pattern>/upload</url-pattern>
-</filter-mapping>
-<filter-mapping>
-    <filter-name>MemberLoginFilter</filter-name>
-    <url-pattern>/init.jsp</url-pattern>
-</filter-mapping>
  
 	 <context-param>
 		<param-name>primefaces.THEME</param-name>
