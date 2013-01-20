@@ -41,15 +41,15 @@
 		</f:facet>
 	</p:dataTable><br/>
 	<center>
-	<h:commandLink  action="#{user.getUrlUpload}" rendered="#{user.admin}">
+	<h:commandLink action="#{user.getUrlUpload}" rendered="#{user.admin}">
 		<h:outputText value="Upload"/>
 	</h:commandLink><br/>
-	<h:commandLink action="init" rendered="#{user.admin}">
+	<h:link outcome="init" rendered="#{user.admin}">
 		<h:outputText value="Gestion des utilisateurs"/>
-	</h:commandLink><br/>
-	<h:commandLink>
+	</h:link><br/>
+	<h:link>
 		<h:outputText value="Recharger la page"/>
-	</h:commandLink><br/>
+	</h:link><br/>
 	</center>
 	</h:panelGroup>
 	<center>
