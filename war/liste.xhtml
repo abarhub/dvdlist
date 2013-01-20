@@ -26,15 +26,30 @@
 		</p:column>
 		<p:column sortBy="#{dvd.dvd}" filterBy="#{dvd.dvd}">
 			<f:facet name="header">DVD</f:facet>
-			#{(dvd.dvd)?"oui":"non"}
+			<h:panelGroup rendered="#{dvd.dvd}">
+				<h:graphicImage url="img/yes-32x32.png" />
+			</h:panelGroup>
+			<h:panelGroup rendered="#{!dvd.dvd}">
+				<h:graphicImage url="img/no-32x32.png" />
+			</h:panelGroup>
 		</p:column>
 		<p:column sortBy="#{dvd.blue_ray}" filterBy="#{dvd.blue_ray}">
 			<f:facet name="header">Blue Ray</f:facet>
-			#{(dvd.blue_ray)?"oui":"non"}
+			<h:panelGroup rendered="#{dvd.blue_ray}">
+				<h:graphicImage url="img/yes-32x32.png" />
+			</h:panelGroup>
+			<h:panelGroup rendered="#{!dvd.blue_ray}">
+				<h:graphicImage url="img/no-32x32.png" />
+			</h:panelGroup>
 		</p:column>
 		<p:column sortBy="#{dvd.version_digitale}" filterBy="#{dvd.version_digitale}">
 			<f:facet name="header">Copy Digital</f:facet>
-			#{(dvd.version_digitale)?"oui":"non"}
+			<h:panelGroup rendered="#{dvd.version_digitale}">
+				<h:graphicImage url="img/yes-32x32.png" />
+			</h:panelGroup>
+			<h:panelGroup rendered="#{!dvd.version_digitale}">
+				<h:graphicImage url="img/no-32x32.png" />
+			</h:panelGroup>
 		</p:column>
 		<f:facet name="footer">
 		#{fn:length(user.listeDvds)} dvds
