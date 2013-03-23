@@ -93,6 +93,20 @@
 </filter-mapping>
  
    
+ <filter>
+    <description>File Upload</description>
+    <filter-name>FileuploadPrimeFacesGae</filter-name>
+    <filter-class>org.dvdlist.web.upload2.GaeFileUploadFilter</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>FileuploadPrimeFacesGae</filter-name>
+    <url-pattern>/upload2.*</url-pattern>
+</filter-mapping>
+<filter-mapping>
+    <filter-name>FileuploadPrimeFacesGae</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+
    <!-- ***** Specify JBoss Expression Language Over Default -->
    <context-param>     
       <param-name>com.sun.faces.expressionFactory</param-name>
@@ -185,7 +199,7 @@
  
  
  
- <filter>
+<!-- <filter>
       <filter-name>Upload Filter</filter-name>
       <filter-class>org.dvdlist.web.upload.UploadFilter</filter-class>
       <init-param>
@@ -207,7 +221,7 @@
    <filter-mapping>
       <filter-name>Upload Filter</filter-name>
       <url-pattern>/upload.jsf</url-pattern>
-   </filter-mapping>
+   </filter-mapping>-->
  
 	 <context-param>
 		<param-name>primefaces.THEME</param-name>
