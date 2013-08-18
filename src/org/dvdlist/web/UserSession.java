@@ -55,7 +55,7 @@ public class UserSession implements Serializable {
 		return "index";
 	}
 	
-	public void getUrlUpload()
+	public void getUrlUpload0()
 	{
 		String url = "upload.jsp";
 	    FacesContext context = FacesContext.getCurrentInstance();
@@ -67,6 +67,11 @@ public class UserSession implements Serializable {
 	    finally{  
 	       context.responseComplete();  
 	    }  
+	}
+	
+	public String getUrlUpload()
+	{
+		return "upload2";
 	}
 	
 	public int getSortByTitre(Dvd dvd1,Dvd dvd2)

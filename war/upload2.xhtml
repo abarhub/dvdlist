@@ -19,6 +19,20 @@
   
     <p:commandButton value="Submit" ajax="false"  
                 actionListener="#{fileUploadController.upload}"/>  
+  <hr/>
+  
+  	<h:commandLink action="liste">
+		<h:outputText value="Retour"/>
+	</h:commandLink><br/>
+	<h:link outcome="init" rendered="#{user.admin}">
+		<h:outputText value="Gestion des utilisateurs"/>
+	</h:link><br/>
+	<h:link>
+		<h:outputText value="Recharger la page"/>
+	</h:link><br/>
+	<h:commandLink action="#{user.deconnection}">
+		<h:outputText value="Déconnexion"/>
+	</h:commandLink><br/>
   
 </h:form>
 
