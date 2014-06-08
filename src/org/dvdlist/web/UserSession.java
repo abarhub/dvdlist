@@ -2,6 +2,8 @@ package org.dvdlist.web;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -14,10 +16,12 @@ import org.dvdlist.jdo.DAO;
 @SessionScoped
 public class UserSession implements Serializable {
 
+	private static final Logger log =Logger.getLogger(UserSession.class.getName());
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 698630705466819721L;
+	private static final long serialVersionUID = 698630705466819723L;
 	
 	private String login;
 
@@ -74,17 +78,20 @@ public class UserSession implements Serializable {
 		return "upload2";
 	}
 	
-	public int getSortByTitre(Dvd dvd1,Dvd dvd2)
+	public int sortByTitre(Object o1,Object o2)
 	{
-		if(dvd1==null&&dvd2==null)
+		if(o1==null&&o2==null)
 			return 0;
-		if(dvd1==null)
+		if(o1==null)
 			return -1;
-		if(dvd2==null)
+		if(o2==null)
 			return 1;
+		//Dvd dvd1=(Dvd) o1,dvd2=(Dvd) o2;
 		String nom1,nom2;
-		nom1=dvd1.getTitre();
-		nom2=dvd2.getTitre();
+		//nom1=dvd1.getTitre();
+		//nom2=dvd2.getTitre();
+		nom1=(String) o1;
+		nom2=(String) o2;
 		if(nom1==null&&nom2==null)
 			return 0;
 		if(nom1==nom2)
@@ -93,6 +100,46 @@ public class UserSession implements Serializable {
 			return -1;
 		if(nom2==null)
 			return 1;
+		return nom1.compareToIgnoreCase(nom2);
+		
+	}
+	
+	public int sortByNoCollection(Object o1,Object o2)
+	{
+		if(o1==null&&o2==null)
+			return 0;
+		if(o1==null)
+			return -1;
+		if(o2==null)
+			return 1;
+		Dvd dvd1=(Dvd) o1,dvd2=(Dvd) o2;
+		String nom1,nom2;
+		nom1=dvd1.getNo_collection();
+		nom2=dvd2.getNo_collection();
+		if(nom1==null&&nom2==null)
+			return 0;
+		if(nom1==nom2)
+			return 0;
+		if(nom1==null)
+			return -1;
+		if(nom2==null)
+			return 1;
+		if(nom1.length()>0&&nom2.length()>0)
+		{
+			if(Character.isDigit(nom1.charAt(0))
+				&&Character.isDigit(nom2.charAt(0)))
+			{
+				int n1,n2;
+				try{
+					n1=Integer.parseInt(nom1);
+					n2=Integer.parseInt(nom2);
+					//return new Integer(n1).compareTo(n2);
+					return Integer.compare(n1, n2);
+				}catch(NumberFormatException e){
+					log.log(Level.INFO, "Erreur ignore : "+e.getLocalizedMessage(),e);
+				}
+			}
+		}
 		return nom1.compareToIgnoreCase(nom2);
 		
 	}

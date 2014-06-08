@@ -7,7 +7,10 @@ package org.dvdlist.web;
 
 import java.io.File;
 import java.io.StringReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -118,11 +121,17 @@ public class ImportFichier {
     private List<DVDDb> convertie(Document doc) {
 	List<DVDDb> liste;
 	boolean dvd0,blue_ray,digital_copie;
+	String id,upc,no_collection,genre;
+	int annee_production,duree_filme;
+	Date date_sortie,date_achat;
 	liste=new ArrayList<DVDDb>();
 	if(doc!=null)
 	{
 	    Element root = doc.getRootElement();
-	    log.log(Level.INFO, "racine="+root.getName());
+	    if(log.isLoggable(Level.INFO))
+	    {
+	    	log.log(Level.INFO, "racine="+root.getName());
+	    }
 	    if(root.getName().equals("Collection"))
 	    {
 		/*for ( Iterator i = root.elementIterator(); i.hasNext(); ) {
@@ -146,8 +155,8 @@ public class ImportFichier {
 			liste.add(dvd);
 		    }
 		}*/
-		for ( Iterator i = root.elementIterator(); i.hasNext(); ) {
-		    Element element = (Element) i.next();
+		for ( Iterator<Element> i = root.elementIterator(); i.hasNext(); ) {
+		    Element element = i.next();
 		    Element elt;
 		    if(element.getName().equals("DVD"))
 		    {
@@ -155,8 +164,16 @@ public class ImportFichier {
 		    	dvd0=false;
 		    	blue_ray=false;
 		    	digital_copie=false;
-				for ( Iterator i2 = element.elementIterator(); i2.hasNext(); ) {
-				    elt = (Element) i2.next();
+		    	id=null;
+		    	upc=null;
+		    	no_collection=null;
+		    	genre=null;
+		    	annee_production=0;
+		    	duree_filme=0;
+		    	date_sortie=null;
+		    	date_achat=null;
+				for ( Iterator<Element> i2 = element.elementIterator(); i2.hasNext(); ) {
+				    elt = i2.next();
 				    if(elt.getName().equals("Title"))
 				    {
 						DVDDb dvd;
@@ -168,15 +185,18 @@ public class ImportFichier {
 						    dvd.setNom(s);
 						    dvd2=dvd;
 						    liste.add(dvd);
-						    log.log(Level.INFO,
-							    "ajout de '"+dvd.getNom()+"','"+elt.getName()+"','"+
-							    elt.getText()+"','"+elt.asXML()+"','"+elt.getStringValue()+"'");
+						    if(log.isLoggable(Level.INFO))
+						    {
+							    log.log(Level.INFO,
+								    "ajout de '"+dvd.getNom()+"','"+elt.getName()+"','"+
+								    elt.getText()+"','"+elt.asXML()+"','"+elt.getStringValue()+"'");
+						    }
 						}
 				    }
 				    else if(elt.getName().equals("MediaTypes"))
 				    {
-				    	for ( Iterator j = elt.elementIterator(); j.hasNext(); ) {
-						    Element elt2 = (Element) j.next();
+				    	for ( Iterator<Element> j = elt.elementIterator(); j.hasNext(); ) {
+						    Element elt2 = j.next();
 						    String s;
 						    if(elt2.getName().equals("DVD"))
 						    {
@@ -198,8 +218,8 @@ public class ImportFichier {
 				    }
 				    else if(elt.getName().equals("Features"))
 				    {
-				    	for ( Iterator j = elt.elementIterator(); j.hasNext(); ) {
-						    Element elt2 = (Element) j.next();
+				    	for ( Iterator<Element> j = elt.elementIterator(); j.hasNext(); ) {
+						    Element elt2 = j.next();
 						    String s;
 						    if(elt2.getName().equals("FeatureDigitalCopy"))
 						    {
@@ -211,12 +231,130 @@ public class ImportFichier {
 						    }
 				    	}
 				    }
+				    else if(elt.getName().equals("ID"))
+				    {
+						String s=elt.getTextTrim();
+						if(s!=null&&!s.isEmpty()&&!s.trim().isEmpty())
+						{
+						    s=s.trim();
+						    id=s;
+						}
+				    }
+				    else if(elt.getName().equals("UPC"))
+				    {
+						String s=elt.getTextTrim();
+						if(s!=null&&!s.isEmpty()&&!s.trim().isEmpty())
+						{
+						    s=s.trim();
+						    upc=s;
+						}
+				    }
+				    else if(elt.getName().equals("CollectionNumber"))
+				    {
+						String s=elt.getTextTrim();
+						if(s!=null&&!s.isEmpty()&&!s.trim().isEmpty())
+						{
+						    s=s.trim();
+						    no_collection=s;
+						}
+				    }
+				    else if(elt.getName().equals("ProductionYear"))
+				    {
+						String s=elt.getTextTrim();
+						if(s!=null&&!s.isEmpty()&&!s.trim().isEmpty())
+						{
+						    s=s.trim();
+						    annee_production=Integer.parseInt(s);
+						}
+				    }
+				    else if(elt.getName().equals("RunningTime"))
+				    {
+						String s=elt.getTextTrim();
+						if(s!=null&&!s.isEmpty()&&!s.trim().isEmpty())
+						{
+						    s=s.trim();
+						    duree_filme=Integer.parseInt(s);
+						}
+				    }
+				    else if(elt.getName().equals("Released"))
+				    {
+						String s=elt.getTextTrim();
+						if(s!=null&&!s.isEmpty()&&!s.trim().isEmpty())
+						{
+							SimpleDateFormat parserSDF=new SimpleDateFormat("yyyy-MM-dd");
+						    s=s.trim();
+						    try {
+								date_sortie=parserSDF.parse(s);
+							} catch (ParseException e) {
+								log.log(Level.SEVERE, "erreur="+e.getLocalizedMessage()+"("+elt+")",e);
+							}
+						}
+				    }
+				    /*else if(elt.getName().equals("UPC"))
+				    {
+						String s=elt.getTextTrim();
+						if(s!=null&&!s.isEmpty()&&!s.trim().isEmpty())
+						{
+						    s=s.trim();
+						    //date_achat=s;
+						}
+				    }*/
+				    else if(elt.getName().equals("PurchaseInfo"))
+				    {
+				    	for ( Iterator<Element> j = elt.elementIterator(); j.hasNext(); ) {
+						    Element elt2 = j.next();
+						    String s;
+						    if(elt2.getName().equals("PurchaseDate"))
+						    {
+						    	s=elt2.getTextTrim();
+						    	if(s!=null&&!s.isEmpty()&&!s.trim().isEmpty())
+								{
+						    		SimpleDateFormat parserSDF=new SimpleDateFormat("yyyy-MM-dd");
+								    s=s.trim();
+								    try {
+										date_achat=parserSDF.parse(s);
+									} catch (ParseException e) {
+										log.log(Level.SEVERE, "erreur="+e.getLocalizedMessage()+"("+elt+")",e);
+									}
+								}
+						    }
+				    	}
+				    }
+				    else if(elt.getName().equals("Genres"))
+				    {
+				    	String txt="";
+				    	for ( Iterator<Element> j = elt.elementIterator(); j.hasNext(); ) {
+						    Element elt2 = j.next();
+						    String s;
+						    if(elt2.getName().equals("Genre"))
+						    {
+						    	s=elt2.getTextTrim();
+						    	if(s!=null&&!s.isEmpty()&&!s.trim().isEmpty())
+								{
+						    		s=s.trim();
+						    		if(txt.length()>0)
+						    			txt+=", ";
+						    		txt+=s;
+								}
+						    }
+				    	}
+				    	if(txt.length()>0)
+				    		genre=txt;
+				    }
 				}
 				if(dvd2!=null)
 				{
 					dvd2.setDvd(Boolean.valueOf(dvd0));
 					dvd2.setBlue_ray(Boolean.valueOf(blue_ray));
 					dvd2.setDigital_copy(Boolean.valueOf(digital_copie));
+					dvd2.setId_collection(id);
+					dvd2.setUpc(upc);
+					dvd2.setNo_collection(no_collection);
+					dvd2.setAnnee_production(annee_production);
+					dvd2.setDuree_minutes(duree_filme);
+					dvd2.setDate_sortie(date_sortie);
+					dvd2.setDate_achat(date_achat);
+					dvd2.setGenre(genre);
 				}
 		    }
 		}

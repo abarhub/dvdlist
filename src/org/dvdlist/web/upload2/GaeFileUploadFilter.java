@@ -3,12 +3,18 @@ package org.dvdlist.web.upload2;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.*;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.primefaces.webapp.MultipartRequest;
-import org.primefaces.webapp.filter.FileUploadFilter;
 
 /*
  * http://coder-in-training.blogspot.fr/2012/04/primefaces-30-fileupload-component-on.html

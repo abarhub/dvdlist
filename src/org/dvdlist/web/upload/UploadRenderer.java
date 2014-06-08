@@ -1,28 +1,21 @@
 package org.dvdlist.web.upload;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.el.ValueExpression;
-import javax.faces.FacesException;
-import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.FacesRenderer;
 import javax.faces.render.Renderer;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import org.apache.commons.fileupload.FileItem;
+
 import org.apache.commons.fileupload.FileItemStream;
 import org.dvdlist.web.ImportFichier;
-import org.dvdlist.web.Upload;
 
 @FacesRenderer(componentFamily="javax.faces.Input",
    rendererType="org.dvdlist.web.upload.Upload")

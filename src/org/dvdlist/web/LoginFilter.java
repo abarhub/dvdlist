@@ -17,6 +17,8 @@ public class LoginFilter implements Filter {
 
 	private static final Logger log =Logger.getLogger(LoginFilter.class.getName());
 	
+	private final boolean sans_blocage=false;
+	
 	    protected ServletContext servletContext;
 
 	    @Override
@@ -51,6 +53,8 @@ public class LoginFilter implements Filter {
 	     */
 	    boolean isAuth(HttpServletRequest req){
 	    	UserSession user;
+	    	if(sans_blocage)
+	    		return true;
 	    	user=OutilsWeb.getUser(req);
 	    	log.info("user:"+user+";connected="+((user!=null&&user.isConnecte())?"true":"false"));
 	    	return user!=null&&user.isConnecte();

@@ -1,9 +1,15 @@
 package org.dvdlist.web.upload2;
 
-import java.io.*;
-import org.apache.commons.fileupload.*;
-import java.util.logging.Level;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.logging.Logger;
+
+import org.apache.commons.fileupload.FileItem;
  
 public class InMemoryFileItem implements FileItem  {
 	  /**

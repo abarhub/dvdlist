@@ -1,6 +1,7 @@
 package org.dvdlist.jdo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -295,6 +296,23 @@ public class DAO {
 							tmp.setBlue_ray(dvd.getBlue_ray());
 						if(!egal(tmp.getDigital_copy(),dvd.getDigital_copy()))
 							tmp.setDigital_copy(dvd.getDigital_copy());
+						if(!egal(tmp.getNo_collection(),dvd.getNo_collection()))
+							tmp.setNo_collection(dvd.getNo_collection());
+
+						if(!egal(tmp.getId_collection(),dvd.getId_collection()))
+							tmp.setId_collection(dvd.getId_collection());
+						if(!egal(tmp.getUpc(),dvd.getUpc()))
+							tmp.setUpc(dvd.getUpc());
+						if(!egal(tmp.getGenre(),dvd.getGenre()))
+							tmp.setGenre(dvd.getGenre());
+						if(!egal(tmp.getAnnee_production(),dvd.getAnnee_production()))
+							tmp.setAnnee_production(dvd.getAnnee_production());
+						if(!egal(tmp.getDate_sortie(),dvd.getDate_sortie()))
+							tmp.setDate_sortie(dvd.getDate_sortie());
+						if(!egal(tmp.getDate_achat(),dvd.getDate_achat()))
+							tmp.setDate_achat(dvd.getDate_achat());
+						if(!egal(tmp.getDuree_minutes(),dvd.getDuree_minutes()))
+							tmp.setDuree_minutes(dvd.getDuree_minutes());
 					}
 					else
 					{
@@ -329,6 +347,36 @@ public class DAO {
 		return dvd.booleanValue()==dvd2.booleanValue();
 	}
 
+	private boolean egal(String dvd, String dvd2) {
+		if(dvd==dvd2)
+			return true;
+		if(dvd==null&&dvd2!=null)
+			return false;
+		if(dvd!=null&&dvd2==null)
+			return false;
+		return dvd.equals(dvd2);
+	}
+
+	private boolean egal(Integer dvd, Integer dvd2) {
+		if(dvd==dvd2)
+			return true;
+		if(dvd==null&&dvd2!=null)
+			return false;
+		if(dvd!=null&&dvd2==null)
+			return false;
+		return dvd.equals(dvd2);
+	}
+
+	private boolean egal(Date dvd, Date dvd2) {
+		if(dvd==dvd2)
+			return true;
+		if(dvd==null&&dvd2!=null)
+			return false;
+		if(dvd!=null&&dvd2==null)
+			return false;
+		return dvd.equals(dvd2);
+	}
+
 	public List<Dvd> donne_liste_dvd() {
 		AppStore app;
 		PersistenceManager pm=null;
@@ -352,6 +400,14 @@ public class DAO {
 					dvd0.setDvd(dvd.getDvd()!=null&&dvd.getDvd().booleanValue());
 					dvd0.setBlue_ray(dvd.getBlue_ray()!=null&&dvd.getBlue_ray().booleanValue());
 					dvd0.setVersion_digitale(dvd.getDigital_copy()!=null&&dvd.getDigital_copy().booleanValue());
+					dvd0.setId_collection(dvd.getId_collection());
+					dvd0.setUpc(dvd.getUpc());
+					dvd0.setNo_collection(dvd.getNo_collection());
+					dvd0.setGenre(dvd.getGenre());
+					dvd0.setDate_sortie(dvd.getDate_sortie());
+					dvd0.setDate_achat(dvd.getDate_achat());
+					dvd0.setAnnee_production(dvd.getAnnee_production());
+					dvd0.setDuree_minutes(dvd.getDuree_minutes());
 					liste_dvd.add(dvd0);
 				}
 			}

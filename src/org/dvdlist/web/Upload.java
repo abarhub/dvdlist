@@ -1,20 +1,18 @@
 package org.dvdlist.web;
 
-import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.geronimo.mail.util.StringBufferOutputStream;
-
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.IOException;
-import java.io.StringWriter;
+import java.io.InputStream;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItemIterator;
+import org.apache.commons.fileupload.FileItemStream;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 @SuppressWarnings("serial")
 public class Upload extends HttpServlet {

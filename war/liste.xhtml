@@ -51,6 +51,39 @@
 				<h:graphicImage url="img/no-32x32.png" />
 			</h:panelGroup>
 		</p:column>
+		<!-- <p:column >
+			<f:facet name="header">Autre</f:facet>
+			<h:outputText value="#{dvd.no_collection} - #{dvd.id_collection} - #{dvd.upc} - #{dvd.genre} - #{dvd.annee_production} - #{dvd.duree_minutes} - #{dvd.date_sortie} - #{dvd.date_achat}" />
+		</p:column> #{dvd.no_collection}-->
+		<p:column  sortBy="#{dvd}" filterBy="#{dvd.no_collection}"
+				 sortFunction="#{user.sortByNoCollection}" >
+			<f:facet name="header">No</f:facet>
+			<h:outputText value="#{dvd.no_collection}" />
+		</p:column>
+		<p:column  filterBy="#{dvd.genre}">
+			<f:facet name="header">Genre</f:facet>
+			<h:outputText value="#{dvd.genre}" />
+		</p:column>
+		<p:column sortBy="#{dvd.annee_production}" filterBy="#{dvd.annee_production}">
+			<f:facet name="header">Annee production</f:facet>
+			<h:outputText value="#{dvd.annee_production}" />
+		</p:column>
+		<p:column sortBy="#{dvd.duree_minutes}" filterBy="#{dvd.duree_minutes}">
+			<f:facet name="header">Duree</f:facet>
+			<h:outputText value="#{dvd.duree_minutes}" />
+		</p:column>
+		<p:column >
+			<f:facet name="header">Date sortie</f:facet>
+			<h:outputText value="#{dvd.date_sortie}" >
+				<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+			</h:outputText>
+		</p:column>
+		<p:column >
+			<f:facet name="header">Date achat</f:facet>
+			<h:outputText value="#{dvd.date_achat}" >
+				<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+			</h:outputText>
+		</p:column>
 		<f:facet name="footer">
 		#{fn:length(user.listeDvds)} dvds
 		</f:facet>
